@@ -1,11 +1,20 @@
 const router = require('express').Router();
+const myPosts = require('../models/NewPost');
 
-router.get("/myposts",async (req,res,next) => {
+router.get("/",async (req,res,next) => {
+    
     try{
-        res.send("connected with myposts")
+        const post = await myPosts.find();
+        res.send(post)
     }catch{
         res.status(500).send("unable to connect to database");
     }
 });
+
+router.get("/:id",async (req,res,next)=>{
+    const post = await myPosts.findById(req.params.id);
+    res.send(post);
+  
+})
 
 module.exports = router;

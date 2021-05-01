@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Post = require("../models/Post");
+const newPost = require('../models/NewPost');
 
 router.get("/", async (req, res, next) => {
   try {
@@ -10,18 +11,28 @@ router.get("/", async (req, res, next) => {
 });
 
 router.post("/", async (req, res, next) => {
-  const post = new Post({
-    photo: req.body.photo,
-    title: req.body.title,
-    subtitle: req.body.subtitle,
-    text: req.body.text,
-  });
+  
+  const reqPost = {
+    mainTitle: "",
+    mainSubtitle: "",
+    photo: "",
+    paragraphs: []
+  };
+
+  req.body.map(el => {
+    return(
+      reqPost.mainTitle = el.mainTitle,
+      reqPost.mainSubtitle = el.mainSubtitle,
+      reqPost.photo = el.photo,
+      reqPost.paragraphs = el.paragraphs
+    )  
+ })
+  
+  const post = new newPost(reqPost);
 
     try {
       await post.save();
-      const lastMessage = await Post.findOne(post._id);
-
-      await res.send(lastMessage);
+      await res.send(post);
     } catch (err) {
       res.status(500).send(err);
     }
