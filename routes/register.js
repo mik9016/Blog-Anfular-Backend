@@ -1,20 +1,26 @@
-const router = require('express').Router();
-const Register = require('../models/Register');
+const router = require("express").Router();
+const Register = require("../models/Register");
+const bcrypt = require("bcryptjs");
 
-router.post('/',(req,res,next)=>{
-    try{
-        const register = new Register({
-            name: req.body.userName,
-            email:req.body.userEmail,
-            password: req.body.userPassword,
-          });
-          console.log(register)
-        res.send(register)
-       
+router.post("/", (req, res, next) => {
+  bcrypt.hash(req.body.password, 10).then((hash) => {
+    const register = new Register({
+      name: req.body.name,
+      email: req.body.email,
+      password: hash,
+    });
 
-    }catch{
-        res.status(500).send("unable to connect to database");
-    }
-})
+    register
+      .save()
+      .then(
+        res.send({
+          message: "Auth is good!",
+        })
+      )
+      .catch((err) => {
+        return res.send("unable to connect to database: " + err);
+      });
+  });
+});
 
 module.exports = router;

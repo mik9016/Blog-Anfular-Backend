@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 
 const schema = new mongoose.Schema({
+    author: {
+      type: String,
+      required: true,
+    },
     mainTitle: {
     type: String,
     required: true,
@@ -16,9 +20,9 @@ const schema = new mongoose.Schema({
     type: String,
     required: true
   },
-  paragraphs:{
-    type: Array,
-    required:false
+  mainText:{
+    type: String,
+    required: true
   },
   date:{
     type: Date,

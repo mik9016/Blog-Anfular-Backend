@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const uniqueValidator = require('mongoose-unique-validator');
 
 const schema = new mongoose.Schema({
   name: {
@@ -11,7 +12,8 @@ const schema = new mongoose.Schema({
       type:String,
       required: true,
       max: 255,
-      min:6
+      min:6,
+      unique: true
   },
   password:{
       type: String,
@@ -24,5 +26,7 @@ const schema = new mongoose.Schema({
       default: Date.now
   }
 });
+
+schema.plugin(uniqueValidator);
 
 module.exports = mongoose.model("Register", schema);

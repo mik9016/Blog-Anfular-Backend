@@ -5,13 +5,14 @@ const schema = new mongoose.Schema({
     type: String,
     required: true,
     max: 255,
-    min: 6,
+    min: 3,
+    
   },
   password: {
     type: String,
     required: true,
     max: 255,
-    min: 6,
+    min: 3,
   },
 });
 
