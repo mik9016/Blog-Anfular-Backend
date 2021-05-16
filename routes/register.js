@@ -9,7 +9,7 @@ router.post("/", (req, res, next) => {
       email: req.body.email,
       password: hash,
     });
-
+   
     register
       .save()
       .then(

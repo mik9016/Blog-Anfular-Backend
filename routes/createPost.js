@@ -24,6 +24,8 @@ router.post("/", async (req, res, next) => {
       photo: req.file.path,
     };
 
+    
+
     const post = new newPost(reqPost);
 
     await post.save();
