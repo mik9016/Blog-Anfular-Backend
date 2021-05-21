@@ -18,7 +18,7 @@ router.get("/:id", async (req, res, next) => {
   res.send(post);
 });
 
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id",checkAuth, async (req, res, next) => {
   try {
     const postId = req.params.id;
     const post = await myPosts.findById(postId);

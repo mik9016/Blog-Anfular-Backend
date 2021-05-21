@@ -1,9 +1,6 @@
 const router = require("express").Router();
-const Post = require("../models/Post");
 const newPost = require("../models/NewPost");
-const path = require("path");
-const fs = require("fs");
-
+const checkAuth = require("../middleware/check-auth");
 
 router.get("/", async (req, res, next) => {
   try {
@@ -13,7 +10,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/",checkAuth, async (req, res, next) => {
 
   try {
     const reqPost = {
